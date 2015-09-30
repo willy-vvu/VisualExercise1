@@ -1,4 +1,6 @@
-<!DOCTYPE html><html><head>
+<!DOCTYPE html>
+<html>
+  <head>
     <title>
       Willy Wu - MAS Visual Exercise 1
     </title>
@@ -270,6 +272,89 @@
           </div>
         </div>
     </div>
-    <script src="index.html.0.js"></script>
+    <script>
+      var isExploded = false;
+      var lastX = 0, lastY = 0;
+      var viewX = 0, viewY = 0;
+      var lastExploded = 0;
+      function toggleExploded(){
+        if(isExploded = !isExploded){
+          document.body.setAttribute("class", "exploded");
+          viewX = -50;
+          viewY = -15;
+          lastExploded = Date.now();
+          resetLast();
+        }
+        else{
+          document.body.setAttribute("class", "");
+          document.getElementById("container").setAttribute("style", "");
+        }
+        // document.documentElement.webkitRequestFullScreen();
+      }
+      function resetLast(){
+        lastX = NaN;
+        lastY = NaN;
+      }
+      function updateRotation(event){
+        if(isExploded && Date.now() > lastExploded + 1000){
+          var coord = event;
+          if(event.changedTouches){
+            coord = event.changedTouches[0];
+          }
+          var deltaX = coord.pageX - lastX;
+          var deltaY = coord.pageY - lastY;
+          lastX = coord.pageX;
+          lastY = coord.pageY;
+          if(!isNaN(deltaX)){
+            viewY-=deltaY * 0.5;
+            viewX+=deltaX * 0.5;
+            render()
+          }
+        }
+      }
+      function render(){
+        viewY = Math.min(Math.max(viewY , -45), 10);
+        viewX = Math.min(Math.max(viewX , -70), 70);
+        if(isExploded){
+          document.getElementById("container").setAttribute("style", 
+            "transform: translate3D(-120px, -90px, -650px) rotateX("+viewY+"deg) rotateY("+viewX+"deg) translateZ(-700px);"
+          );
+        }
+      }
+      var pressed = false;
+      function loop () {
+
+				requestAnimationFrame( loop );
+  			var gamepad = navigator.getGamepads()[0]
+				if(gamepad){
+  				viewX += 10 * gamepad.axes[5];
+  				viewY += 10 * gamepad.axes[3];
+  				if(gamepad.buttons[1].pressed != pressed){
+  				  pressed = gamepad.buttons[1].pressed;
+  				  if(pressed){
+  				    toggleExploded();
+  				  }
+  				}
+  				// sx += -100 * Math.sin(Math.PI*viewY/180)*Math.cos(Math.PI*viewX/180)*gamepad.axes[0];
+  				// sy += 100 * Math.sin(Math.PI*viewY/180)*Math.sin(Math.PI*viewX/180)*gamepad.axes[2];
+  				// sz += -100 * Math.cos(Math.PI*viewY/180)*gamepad.axes[1];
   
-</body></html>
+          // document.getElementById("container").setAttribute("style", 
+          //   "transform: translate3D("+sx+"px, "+sy+"px, "+sz+"px) rotateX("+viewY+"deg) rotateY("+viewX+"deg) translateZ(-700px);"
+          // );
+          render();
+				}
+			}
+			loop();
+      window.onload = function(){
+        setTimeout(function(){
+          toggleExploded();
+          document.body.onmousemove = document.body.ontouchmove = updateRotation;
+          document.body.ontouchstart = resetLast;
+          document.body.ontouchend = resetLast;
+          document.body.onclick = toggleExploded;
+        }, 300);
+      };
+    </script>
+  </body>
+</html>
