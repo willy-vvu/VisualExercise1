@@ -1,6 +1,6 @@
 # Visual Exercise 1
 
-Taking this assignment far beyond requirements, I tried to conceptualize what debugging would be like in a rich, interactive programming environment of the future. If only programs could be built and inspected in an exploded view -- a way to expose their otherwise opaque inner workings -- debugging and programming would become one and the same, as a programmer could program in a rapid, fluid, hands-on manner akin to a mechanical engineer working with physical parts. Unfortunately, this Visual Exercise only offers a snapshot, a glimpse, of this potential means of programming; not yet a functional visual programming environment.
+Taking this assignment beyond requirements, I conceptualized what debugging would be like in a futuristic, interactive programming environment. If only programs could be built and inspected in an exploded view -- a way to expose their otherwise opaque inner workings -- debugging and programming would become one and the same, as a programmer could program in a rapid, fluid, hands-on manner akin to a mechanical engineer working with physical parts. This Visual Exercise only offers a snapshot of this potential means of programming, not yet a functional visual programming environment.
 
 [View in Browser](http://willy-vvu.github.io/VisualExercise1/)
 
